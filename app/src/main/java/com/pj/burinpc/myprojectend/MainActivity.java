@@ -43,6 +43,12 @@ public class MainActivity extends AppCompatActivity {
             String strBookingURL = "http://www.fourchokcodding.com/boom/get/get_booking.php";
             String strBookingDetailURL = "http://www.fourchokcodding.com/boom/get/get_booking_detail.php";
 
+            // 1. Create Inputstream
+
+            // 2. Create strJSON
+
+            // 3. Update to SQLite
+
             // Increase inTimes
             inTimes += 1;
         } // While
