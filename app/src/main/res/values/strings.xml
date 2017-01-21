@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">MyProjectEnd</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_setting">Setting</string>
+
+    <string name="head">Sport Complex OF Samutprakan United</string>
+    <string name="user">UserName :</string>
+    <string name="pass">Password :</string>
+    <string name="login">Login</string>
 </resources>

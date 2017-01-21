@@ -1,9 +1,15 @@
 package com.pj.burinpc.myprojectend;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.EditText;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -25,18 +31,106 @@ public class MainActivity extends AppCompatActivity {
     private Booking objBooking;
     private BookingDetail objBookingDetail;
 
+    private EditText userEditText, passEditText;
+    private String strUserChoose, strPassChoose;
+    private String strPasswordTrue, strName;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // Initial widget
+        initialWidget();
+
         // Connected SQLite
         connectedSQLite();
+
+        // Delete All Data
+        deleteAllData();
 
         // Synchronize JSON to SQLite
         synJSON();
 
     } // On Create
+
+    private void initialWidget() {
+        userEditText = (EditText) findViewById(R.id.editText);
+        passEditText = (EditText) findViewById(R.id.editText2);
+
+    } // initialWidget
+
+    public void clickLogin(View view) {
+        strUserChoose = userEditText.getText().toString().trim();
+        strPassChoose = passEditText.getText().toString().trim();
+
+
+        // check null
+        if (strUserChoose.equals("") || strPassChoose.equals("")) {
+            // Alert error
+            MyAlertDialog objMyAlert = new MyAlertDialog();
+            objMyAlert.errorDialog(MainActivity.this, "มีช่องว่างเปล่า", "กรุณากรอกให้ครบ ทุกช่อง");
+        }else {
+            chekUserName();
+        }
+    } // click login
+
+    private void chekUserName() {
+        try {
+            String[] strMyResult = objMember.searchUserName(strUserChoose);
+            strPasswordTrue = strMyResult[2];
+            strName = strMyResult[3];
+
+            Log.d("masterPJ", "ยินดีต้อนรับ :  " + strName);
+
+            checkPass();
+
+        } catch (Exception e) {
+            MyAlertDialog objMyAlert = new MyAlertDialog();
+            objMyAlert.errorDialog(MainActivity.this, "  ไม่มีชื่อผู้ใช้", "ไม่มี " + strUserChoose + " ในระบบของเรา");
+        }
+
+    } // Check User
+
+    private void checkPass() {
+        if (strPassChoose.equals(strPasswordTrue)) {
+            // Intent to BookingActivity
+            welcomeMember();
+
+        } else {
+            MyAlertDialog objMyAlert = new MyAlertDialog();
+            objMyAlert.errorDialog(MainActivity.this, "รหัสผ่านผิดพลาด", "กรุณากรอกรหัสผ่านใหม่อีกครั้ง");
+        }
+
+    } // Check Password
+
+    private void welcomeMember() {
+        AlertDialog.Builder objAlert = new AlertDialog.Builder(this);
+        objAlert.setIcon(R.drawable.icon_football);
+        objAlert.setTitle("Samutprakan United");
+        objAlert.setMessage("ยินดีต้อนรับ " + strName + "\n" + " สู่ระบบของเรา");
+        objAlert.setCancelable(false);
+        objAlert.setPositiveButton("ตกลง", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                Intent objIntent = new Intent(MainActivity.this, BookingActivity.class);
+                startActivity(objIntent);
+                finish();
+            }
+        });
+        objAlert.show();
+
+    } // Welcome Member
+
+    private void deleteAllData() {
+        SQLiteDatabase objSqLiteDatabase = openOrCreateDatabase("fourchokco_boom.db", MODE_APPEND, null);
+        objSqLiteDatabase.delete("member", null, null);
+        objSqLiteDatabase.delete("stadium", null, null);
+        objSqLiteDatabase.delete("emp_book", null, null);
+        objSqLiteDatabase.delete("booking", null, null);
+        objSqLiteDatabase.delete("booking_detail", null, null);
+
+    } // Delete all data
 
     private void synJSON() {
         StrictMode.ThreadPolicy Mypolicy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
