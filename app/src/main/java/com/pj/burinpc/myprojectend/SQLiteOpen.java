@@ -10,11 +10,11 @@ public class SQLiteOpen extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "fourchokco_boom.db";
     private static final int DATABASE_VERSION = 1;
     private static final String CREATE_MEMBER_TABLE = "create table member " +
-            "(MemberID integer primary key, MemberUserName text, MemberPass text, MemberName text, MemberTel text);";
+            "(MemberID integer primary key , MemberUserName text, MemberPass text, MemberName text, MemberTel text, MemberStatus);";
     private static final String CREATE_STADIUM_TABLE = "create table stadium " +
             "(StadiumID integer primary key, StadiumName text, StadiumPrice text);";
     private static final String CREATE_EMPBOOK_TABLE = "create table emp_book " +
-            "(EB_ID integer primary key, EB_Username text, EB_Pass text, EB_Name text);";
+            "(EB_ID integer primary key, EB_Username text, EB_Pass text, EB_Name text, EB_Status);";
     private static final String CREATE_BOOKING_TABLE = "create table booking " +
             "(BookID integer primary key, EB_ID text, MemberID text, BookName text, BookDate text);";
     private static final String CREATE_BOOKINGDETAIL_TABLE = "create table booking_detail " +

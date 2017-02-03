@@ -106,14 +106,14 @@ public class MainActivity extends AppCompatActivity {
 
     private void welcomeMember() {
         AlertDialog.Builder objAlert = new AlertDialog.Builder(this);
-        objAlert.setIcon(R.drawable.icon_football);
+        //objAlert.setIcon(R.drawable.icon_football);
         objAlert.setTitle("Samutprakan United");
         objAlert.setMessage("ยินดีต้อนรับ " + strName + "\n" + " สู่ระบบของเรา");
         objAlert.setCancelable(false);
         objAlert.setPositiveButton("ตกลง", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                Intent objIntent = new Intent(MainActivity.this, BookingActivity.class);
+                Intent objIntent = new Intent(MainActivity.this, ShowStadium.class);
                 startActivity(objIntent);
                 finish();
             }
@@ -121,16 +121,6 @@ public class MainActivity extends AppCompatActivity {
         objAlert.show();
 
     } // Welcome Member
-
-    private void deleteAllData() {
-        SQLiteDatabase objSqLiteDatabase = openOrCreateDatabase("fourchokco_boom.db", MODE_APPEND, null);
-        objSqLiteDatabase.delete("member", null, null);
-        objSqLiteDatabase.delete("stadium", null, null);
-        objSqLiteDatabase.delete("emp_book", null, null);
-        objSqLiteDatabase.delete("booking", null, null);
-        objSqLiteDatabase.delete("booking_detail", null, null);
-
-    } // Delete all data
 
     private void synJSON() {
         StrictMode.ThreadPolicy Mypolicy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
@@ -201,41 +191,48 @@ public class MainActivity extends AppCompatActivity {
                     switch (inTimes) {
                         case 0:
                             // Update member table
+                            String strMemberID = jsonObject.getString("MemberID");
                             String strUserName = jsonObject.getString("MemberUserName");
                             String strPass = jsonObject.getString("MemberPass");
                             String strName = jsonObject.getString("MemberName");
                             String strTel =  jsonObject.getString("MemberTel");
-                            objMember.addMember(strUserName, strPass, strName, strTel);
+                            String strStatus = jsonObject.getString("MemberStatus");
+                            objMember.addMember(strMemberID, strUserName, strPass, strName, strTel, strStatus);
                             break;
                         case 1:
                             // Update stadium table
+                            String strStadiumID = jsonObject.getString("StadiumID");
                             String strStadiumName = jsonObject.getString("StadiumName");
                             String strStadiumPrice = jsonObject.getString("StadiumPrice");
-                            objStadium.addStadium(strStadiumName, strStadiumPrice);
+                            objStadium.addStadium(strStadiumID, strStadiumName, strStadiumPrice);
                             break;
                         case 2:
                             // Update emp_book table
+                            String strEB_ID = jsonObject.getString("EB_ID");
                             String strEmpUser = jsonObject.getString("EB_Username");
                             String strEmpPass = jsonObject.getString("EB_Pass");
                             String strEmpName = jsonObject.getString("EB_Name");
-                            objEmpBook.addEmpBook(strEmpUser, strEmpPass, strEmpName);
+                            String strEBStatus = jsonObject.getString("EB_Status");
+                            objEmpBook.addEmpBook(strEB_ID, strEmpUser, strEmpPass, strEmpName, strEBStatus);
                             break;
                         case 3:
                             // update booking table
+                            String strBookID = jsonObject.getString("BookID");
                             String strEmpID = jsonObject.getString("EB_ID");
-                            String strMemberID = jsonObject.getString("MemberID");
+                            String strmemberID = jsonObject.getString("MemberID");
                             String strBookName = jsonObject.getString("BookName");
                             String strBookDate = jsonObject.getString("BookDate");
-                            objBooking.addBooking(strEmpID, strMemberID, strBookName, strBookDate);
+                            objBooking.addBooking(strBookID, strEmpID, strmemberID, strBookName, strBookDate);
                             break;
                         default:
                             // Update booking_detail table
-                            String strBookID = jsonObject.getString("BookID");
-                            String strStadiumID = jsonObject.getString("StadiumID");
+                            String strBD_ID = jsonObject.getString("BD_ID");
+                            String strbookID = jsonObject.getString("BookID");
+                            String strstadiumID = jsonObject.getString("StadiumID");
                             String strStartTime = jsonObject.getString("StartTime");
                             String strOverTine = jsonObject.getString("OverTime");
                             String strTotal = jsonObject.getString("Total");
-                            objBookingDetail.addBookingDetail(strBookID, strStadiumID, strStartTime,
+                            objBookingDetail.addBookingDetail(strBD_ID, strbookID, strstadiumID, strStartTime,
                                     strOverTine, strTotal);
                             break;
                     }
@@ -258,4 +255,19 @@ public class MainActivity extends AppCompatActivity {
         objBookingDetail = new BookingDetail(this);
 
     } // Connected SQLite
+
+    public void clickRegis(View view){
+        startActivity(new Intent(MainActivity.this, RegisterActivity.class));
+        finish();
+    } // ClickRegister
+
+    private void deleteAllData() {
+        SQLiteDatabase objSqLiteDatabase = openOrCreateDatabase("fourchokco_boom.db", MODE_APPEND, null);
+        objSqLiteDatabase.delete("member", null, null);
+        objSqLiteDatabase.delete("stadium", null, null);
+        objSqLiteDatabase.delete("emp_book", null, null);
+        objSqLiteDatabase.delete("booking", null, null);
+        objSqLiteDatabase.delete("booking_detail", null, null);
+
+    } // Delete all data
 }

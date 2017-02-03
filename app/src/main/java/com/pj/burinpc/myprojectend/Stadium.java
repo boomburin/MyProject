@@ -22,8 +22,9 @@ public class Stadium {
 
     } // Constructor
 
-    public long addStadium(String strStadiumName, String strStadiumPrice){
+    public long addStadium(String strStadiumID, String strStadiumName, String strStadiumPrice){
         ContentValues objContentValues = new ContentValues();
+        objContentValues.put(COLUMN_STADIUM_ID, strStadiumID);
         objContentValues.put(COLUMN_STADIUM_NAME, strStadiumName);
         objContentValues.put(COLUMN_STADIUM_PRICE, strStadiumPrice);
         return readSqLiteDatabase.insert(STADIUM_TABLE, null, objContentValues);

@@ -24,8 +24,9 @@ public class Booking {
 
     } // Constructor
 
-    public long addBooking (String strEmpBookID, String strMemberID, String strBookName, String strBookDate){
+    public long addBooking (String strBookID, String strEmpBookID, String strMemberID, String strBookName, String strBookDate){
         ContentValues objContentValues = new ContentValues();
+        objContentValues.put(COLUMN_BOOKING_ID, strBookID);
         objContentValues.put(COLUMN_BOOKING_EB_ID, strEmpBookID);
         objContentValues.put(COLUMN_BOOKING_MEMBER_ID, strMemberID);
         objContentValues.put(COLUMN_BOOKING_NAME, strBookName);

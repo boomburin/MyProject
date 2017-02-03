@@ -7,4 +7,5 @@
     <dimen name="h2">30sp</dimen>
     <dimen name="d1">400dp</dimen>
     <dimen name="logo">200dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
 </resources>

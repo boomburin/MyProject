@@ -24,8 +24,9 @@ public class BookingDetail {
         readSqLiteDatabase = objSQLiteOpen.getReadableDatabase();
     } // Constructor
 
-    public long addBookingDetail(String strBookingID, String strStadiumID, String strStartTime, String strOverTime, String strTotal){
+    public long addBookingDetail(String strBD_ID, String strBookingID, String strStadiumID, String strStartTime, String strOverTime, String strTotal){
         ContentValues objContentValues = new ContentValues();
+        objContentValues.put(COLUMN_BD_ID, strBD_ID);
         objContentValues.put(COLUMN_BD_BOOK_ID, strBookingID);
         objContentValues.put(COLUMN_BD_STADIUM_ID, strStadiumID);
         objContentValues.put(COLUMN_BD_STARTTIME, strStartTime);

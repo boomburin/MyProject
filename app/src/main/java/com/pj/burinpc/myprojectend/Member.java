@@ -17,6 +17,7 @@ public class Member {
     public static final String COLUMN_MEMBER_PASS = "MemberPass";
     public static final String COLUMN_MEMBER_NAME = "MemberName";
     public static final String COLUMN_MEMBER_TEL = "MemberTel";
+    public static final String COLUMN_MEMBER_STATUS = "MemberStatus";
 
     public Member(Context context) {
         objSQLiteOpen = new SQLiteOpen(context);
@@ -30,7 +31,7 @@ public class Member {
             String[] strMyResult = null;
             Cursor objCursor = readSqLiteDatabase.query(MEMBER_TABLE,
                     new String[]{COLUMN_MEMBER_ID, COLUMN_MEMBER_USERNAME, COLUMN_MEMBER_PASS,
-                            COLUMN_MEMBER_NAME, COLUMN_MEMBER_TEL}, COLUMN_MEMBER_USERNAME + "=?",
+                            COLUMN_MEMBER_NAME, COLUMN_MEMBER_TEL, COLUMN_MEMBER_STATUS}, COLUMN_MEMBER_USERNAME + "=?",
                     new String[]{String.valueOf(strUserName)},
                     null, null, null, null);
             if (objCursor != null) {
@@ -41,6 +42,7 @@ public class Member {
                     strMyResult[2] = objCursor.getString(2);
                     strMyResult[3] = objCursor.getString(3);
                     strMyResult[4] = objCursor.getString(4);
+                    strMyResult[5] = objCursor.getString(5);
                 } // if 2
             } // if 1
             objCursor.close();
@@ -51,12 +53,14 @@ public class Member {
         //return new String[0];
     } // searchUser
 
-    public long addMember(String strUserName, String strPass, String strName, String strTel){
+    public long addMember(String strMemberID, String strUserName, String strPass, String strName, String strTel, String strStatus){
         ContentValues objContentValues = new ContentValues();
+        objContentValues.put(COLUMN_MEMBER_ID, strMemberID);
         objContentValues.put(COLUMN_MEMBER_USERNAME, strUserName);
         objContentValues.put(COLUMN_MEMBER_PASS, strPass);
         objContentValues.put(COLUMN_MEMBER_NAME, strName);
         objContentValues.put(COLUMN_MEMBER_TEL, strTel);
+        objContentValues.put(COLUMN_MEMBER_STATUS, strStatus);
         return readSqLiteDatabase.insert(MEMBER_TABLE, null, objContentValues);
     } // addMember
 
