@@ -38,7 +38,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     } // OnCreate
 
-    public void clickCancelRegister(View view){
+    public void onBackPressed(){
         final android.support.v7.app.AlertDialog.Builder dialog = new android.support.v7.app.AlertDialog.Builder(this);
         dialog.setCancelable(true);
         dialog.setMessage("ยกเลิกการสมัครหรือไม่");

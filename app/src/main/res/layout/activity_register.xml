@@ -106,15 +106,6 @@
             android:onClick="clickRegister"
             android:text="ยืนยันการสมัคร" />
 
-        <Button
-            android:id="@+id/btnCancelRegis"
-            android:layout_width="170dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1.08"
-            android:layout_marginTop="10dp"
-            android:onClick="clickCancelRegister"
-            android:text="ยกเลิก" />
-
     </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>

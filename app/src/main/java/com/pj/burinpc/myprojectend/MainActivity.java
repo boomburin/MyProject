@@ -113,7 +113,7 @@ public class MainActivity extends AppCompatActivity {
         objAlert.setPositiveButton("ตกลง", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                Intent objIntent = new Intent(MainActivity.this, ShowStadium.class);
+                Intent objIntent = new Intent(MainActivity.this, MainApp.class);
                 startActivity(objIntent);
                 finish();
             }
